@@ -10,11 +10,12 @@ import { ChakraProvider } from '@chakra-ui/react'
 // Pages
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
-import Error404 from './pages/Error404';
+import Error404 from './pages/ErrorPage';
 
 // React Router
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import App from './App';
+
 const router = createBrowserRouter([
   {
     path: "/",

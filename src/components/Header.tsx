@@ -30,7 +30,7 @@ export const Header = (props: HeaderProps) => {
           Meu time
         </Text>
         {
-          props.name ? (<HStack>
+          props.btn ? (<HStack>
             <Text fontSize="14px" color="#000000">
               Welcome {props.name}!
             </Text>

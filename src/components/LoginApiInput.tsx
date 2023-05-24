@@ -1,11 +1,13 @@
 import { VStack, Text, Input, Link, HStack, Button } from "@chakra-ui/react"
+import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 
 export const LoginApiInput = () => {
+
+  const navigate = useNavigate();
+
   const [apiKey, setApiKey] = useState<string>("")
   const [isIvalidApiKey, setIsIvalidApiKey] = useState<boolean>(false)
-  const [name, setName] = useState<string>("")
-  const [plan, setPlan] = useState<string>("")
 
   const validateApiKey = async () => {
     const response = await fetch("https://v3.football.api-sports.io/status", {
@@ -19,9 +21,10 @@ export const LoginApiInput = () => {
     if (data.errors.token) {
       return setIsIvalidApiKey(true)
     }
+    const name = data.response.account.firstname
+    const plan = data.response.subscription.plan
 
-    setName(data.results.name)
-    setPlan(data.results.plan)
+    navigate("/dashboard", { state: { apiKey: apiKey, name: name, plan: plan } })
   }
 
   return (
