@@ -1,14 +1,11 @@
 import { VStack, Text, Input, Link, HStack, Button } from "@chakra-ui/react"
 import { useState } from "react"
 
-interface LoginApiInputProps {
-  setName: (name: string) => void
-  setPlan: (plan: string) => void
-}
-
-export const LoginApiInput = (props: LoginApiInputProps) => {
+export const LoginApiInput = () => {
   const [apiKey, setApiKey] = useState<string>("")
   const [isIvalidApiKey, setIsIvalidApiKey] = useState<boolean>(false)
+  const [name, setName] = useState<string>("")
+  const [plan, setPlan] = useState<string>("")
 
   const validateApiKey = async () => {
     const response = await fetch("https://v3.football.api-sports.io/status", {
@@ -19,12 +16,12 @@ export const LoginApiInput = (props: LoginApiInputProps) => {
       }
     })
     const data = await response.json()
-    if(data.errors.token) {
+    if (data.errors.token) {
       return setIsIvalidApiKey(true)
     }
 
-    props.setName(data.results.name)
-    props.setPlan(data.results.plan)
+    setName(data.results.name)
+    setPlan(data.results.plan)
   }
 
   return (

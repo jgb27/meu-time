@@ -1,9 +1,9 @@
 import { Text, Stack, Button, VStack, HStack } from "@chakra-ui/react"
 
 interface HeaderProps {
-  btn: boolean
-  name: string
-  plan: string
+  btn?: boolean | false
+  name?: string 
+  plan?: string
 }
 
 export const Header = (props: HeaderProps) => {
