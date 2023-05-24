@@ -1,8 +1,8 @@
-import Login from "./pages/Login"
+import {Outlet } from 'react-router-dom'
 
 function App() {
   return (
-    <Login />
+    <Outlet />
   )
 }
 
