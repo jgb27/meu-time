@@ -1,12 +1,15 @@
 import { Text, Stack, Button, VStack, HStack } from "@chakra-ui/react"
+import { useNavigate } from "react-router-dom"
 
 interface HeaderProps {
   btn?: boolean | false
-  name?: string 
+  name?: string
   plan?: string
 }
 
 export const Header = (props: HeaderProps) => {
+  const navigate = useNavigate();
+
   const align = !props.btn ? "flex-start" : "center";
   return (
     <Stack
@@ -41,9 +44,11 @@ export const Header = (props: HeaderProps) => {
         }
       </VStack>
       {
-        props.btn ? (<Button size="lg" variant="outline" colorScheme="red">
-          <Text fontFamily="'Inter Variable', sans-serif" fontSize="14px">Exit</Text>
-        </Button>) : (<></>)
+        props.btn ? (
+          <Button size="lg" variant="outline" colorScheme="red" onClick={() => navigate("/", { state: { apiKey: "", name: "", plan: "" } })}>
+            <Text fontFamily="'Inter Variable', sans-serif" fontSize="14px">Exit</Text>
+          </Button>
+        ) : (<></>)
       }
     </Stack>
   )
