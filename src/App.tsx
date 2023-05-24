@@ -1,14 +1,8 @@
-import { VStack } from "@chakra-ui/react"
-import { Header } from "./components/Header"
-import { LoginApiInput } from "./components/LoginApiInput"
+import Login from "./pages/Login"
 
 function App() {
-
   return (
-    <VStack spacing="15%">
-      <Header btn={false} />
-      <LoginApiInput />
-    </VStack>
+    <Login />
   )
 }
 

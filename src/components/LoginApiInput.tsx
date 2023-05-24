@@ -1,9 +1,31 @@
 import { VStack, Text, Input, Link, HStack, Button } from "@chakra-ui/react"
 import { useState } from "react"
 
-export const LoginApiInput = () => {
+interface LoginApiInputProps {
+  setName: (name: string) => void
+  setPlan: (plan: string) => void
+}
+
+export const LoginApiInput = (props: LoginApiInputProps) => {
   const [apiKey, setApiKey] = useState<string>("")
   const [isIvalidApiKey, setIsIvalidApiKey] = useState<boolean>(false)
+
+  const validateApiKey = async () => {
+    const response = await fetch("https://v3.football.api-sports.io/status", {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": "v3.football.api-sports.io",
+        "x-rapidapi-key": apiKey
+      }
+    })
+    const data = await response.json()
+    if(data.errors.token) {
+      return setIsIvalidApiKey(true)
+    }
+
+    props.setName(data.results.name)
+    props.setPlan(data.results.plan)
+  }
 
   return (
     <VStack verticalAlign="Center" align="center" spacing="15px" fontFamily="'Inter Variable', sans-serif">
@@ -34,7 +56,12 @@ export const LoginApiInput = () => {
           variant="outline"
           colorScheme={apiKey.length == 32 ? "green" : "red"}
           onClick={() => {
-            apiKey.length == 32 ? console.log("ok") : setIsIvalidApiKey(true)
+            if (apiKey.length == 32) {
+              validateApiKey()
+              setIsIvalidApiKey(false)
+            } else {
+              setIsIvalidApiKey(true)
+            }
           }}
         >
           <Text fontFamily="'Inter Variable', sans-serif" fontSize="14px">Login</Text>
