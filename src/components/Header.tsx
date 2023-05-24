@@ -17,7 +17,6 @@ export const Header = (props: HeaderProps) => {
       align={align}
       spacing="80%"
       minWidth="100%"
-      background="#D9D9D9"
     >
       <Text
         fontFamily="'Inter Variable', sans-serif"

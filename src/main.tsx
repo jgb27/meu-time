@@ -7,7 +7,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import '@fontsource-variable/inter';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <ChakraProvider >
+  <ChakraProvider>
     <React.StrictMode>
       <App />
     </React.StrictMode>
