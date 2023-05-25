@@ -50,7 +50,7 @@ export const GetCoutries = async (api: string) => {
 export const GetLeague = async (api: string, country: string) => {
   const data = localStorage.getItem(`leagues: ${country}`)
 
-  if (data) {
+  if (data && JSON.parse(data).length > 0) {
     console.log('Leagues from cache')
     return JSON.parse(data)
   } else {
@@ -82,7 +82,7 @@ export const GetLeague = async (api: string, country: string) => {
 
 export const GetTeams = async (api: string, league: number, season: number) => {
   const data = localStorage.getItem(`teams: ${league} ${season}`)
-  if (data) {
+  if (data && JSON.parse(data).length > 0) {
     console.log('Teams from cache')
     return JSON.parse(data)
   } else {
@@ -114,7 +114,7 @@ export const GetTeams = async (api: string, league: number, season: number) => {
 
 export const GetTeamStatistic = async (api: string, team: number, season: number, league: number) => {
   const data = localStorage.getItem(`team: ${team} ${season} ${league}`)
-  if (data) {
+  if (data && JSON.parse(data).length > 0) {
     console.log('Team statistic from cache')
     return JSON.parse(data)
   } else {
@@ -155,7 +155,7 @@ export const GetTeamStatistic = async (api: string, team: number, season: number
 
 export const GetTeamPlayers = async (api: string, team: number, season: number, league: number) => {
   const data = localStorage.getItem(`players: ${team} ${season} ${league}`)
-  if (data) {
+  if (data && JSON.parse(data).length > 0) {
     console.log('Team players from cache')
     return JSON.parse(data)
   } else {
