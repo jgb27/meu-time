@@ -1,42 +1,8 @@
 import { Box } from "@chakra-ui/react";
 import Chart from "react-apexcharts";
+import { IGoalsForMinute } from "../Interfaces/IntefaceStatistic";
 
-interface GoalsForMinute {
-  '0-15': {
-    total: number;
-    percentage: string;
-  },
-  '16-30': {
-    total: number;
-    percentage: string;
-  },
-  '31-45': {
-    total: number;
-    percentage: string;
-  },
-  '46-60': {
-    total: number;
-    percentage: string;
-  },
-  '61-75': {
-    total: number;
-    percentage: string;
-  },
-  '76-90': {
-    total: number;
-    percentage: string;
-  },
-  '91-105': {
-    total: number;
-    percentage: string;
-  },
-  '106-120': {
-    total: number;
-    percentage: string;
-  }
-}
-
-const Graphics = (props: GoalsForMinute) => {
+const Graphics = (props: IGoalsForMinute) => {
   const options = {
     xaxis: {
       categories: ['0-15', '16-30', '31-45', '46-60', '61-75', '76-90', '91-105', '106-120'],

@@ -1,23 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-interface League {
-  id: number,
-  name: string,
-  logo: string,
-  sessons?: number[]
-}
-
-interface Team {
-  id: number,
-  code: string,
-  name: string,
-  logo: string
-}
-
-interface Player {
-  name: string,
-  age: number,
-  nationality: string,
-}
+import { League,Team, Player } from "../Interfaces/InterfaceResponseApi"
 
 const leagues: League[] = []
 const teams: Team[] = []
@@ -44,7 +26,6 @@ export const GetCoutries = async (api: string) => {
 
     return data.response
   }
-
 }
 
 export const GetLeague = async (api: string, country: string) => {
