@@ -32,10 +32,88 @@ function Dashboard() {
     draws: string,
     loses: string,
     lineups: string,
+    goals: GoalsForMinute
+  }
+
+  interface GoalsForMinute {
+    '0-15': {
+      total: number;
+      percentage: string;
+    },
+    '16-30': {
+      total: number;
+      percentage: string;
+    },
+    '31-45': {
+      total: number;
+      percentage: string;
+    },
+    '46-60': {
+      total: number;
+      percentage: string;
+    },
+    '61-75': {
+      total: number;
+      percentage: string;
+    },
+    '76-90': {
+      total: number;
+      percentage: string;
+    },
+    '91-105': {
+      total: number;
+      percentage: string;
+    },
+    '106-120': {
+      total: number;
+      percentage: string;
+    }
+  }
+
+  const StaticsDefault = {
+    games: "",
+    wins: "",
+    draws: "",
+    loses: "",
+    lineups: "",
+    goals: {
+      '0-15': {
+        total: 0,
+        percentage: ""
+      },
+      '16-30': {
+        total: 0,
+        percentage: ""
+      },
+      '31-45': {
+        total: 0,
+        percentage: ""
+      },
+      '46-60': {
+        total: 0,
+        percentage: ""
+      },
+      '61-75': {
+        total: 0,
+        percentage: ""
+      },
+      '76-90': {
+        total: 0,
+        percentage: ""
+      },
+      '91-105': {
+        total: 0,
+        percentage: ""
+      },
+      '106-120': {
+        total: 0,
+        percentage: ""
+      }
+    }
   }
 
   const [team, setTeam] = useState<TeamNumber>({ team: 0, season: 0, league: 0, name: "" })
-  const [statistic, setStatistic] = useState<IStatistic>({ games: "", wins: "", draws: "", loses: "", lineups: "" })
+  const [statistic, setStatistic] = useState<IStatistic>(StaticsDefault)
 
   const [players, setPlayers] = useState<IPlayers>({ players: [] })
 
@@ -60,12 +138,13 @@ function Dashboard() {
         width="80%"
         p={2}
       >
-        <TablePlayer players={players.players} nameTeam={team.name}/>
+        <TablePlayer players={players.players} nameTeam={team.name} />
         <TableTeamStatistic
           games={statistic.games}
           wins={statistic.wins}
           draws={statistic.draws}
           loses={statistic.loses}
+          goals={statistic.goals}
         />
       </HStack>
 

@@ -70,7 +70,7 @@ export const GetLeague = async (api: string, country: string) => {
         id: league.league.id,
         name: league.league.name,
         logo: league.league.logo,
-        sessons: league.map((season: any) => season.year)
+        sessons: league.seasons.map((season: any) => season.year)
       })
     })
 
@@ -103,6 +103,7 @@ export const GetTeams = async (api: string, league: number, season: number) => {
         code: team.team.code,
         name: team.team.name,
         logo: team.team.logo
+
       }
     }))
 
@@ -118,6 +119,7 @@ export const GetTeamStatistic = async (api: string, team: number, season: number
     console.log('Team statistic from cache')
     return JSON.parse(data)
   } else {
+    console.log('Team statistic from API')
     const response = await fetch(`https://v3.football.api-sports.io/teams/statistics?season=${season}&team=${team}&league=${league}`, {
       "method": "GET",
       "headers": {
@@ -133,7 +135,17 @@ export const GetTeamStatistic = async (api: string, team: number, season: number
       wins: data.response.fixtures.wins.total,
       draws: data.response.fixtures.draws.total,
       loses: data.response.fixtures.loses.total,
-      lineups: data.response.lineups[0].formation
+      lineups: data.response.lineups[0].formation,
+      goals: {
+        '0-15': data.response.goals.for.minute['0-15'],
+        '16-30': data.response.goals.for.minute['16-30'],
+        '31-45': data.response.goals.for.minute['31-45'],
+        '46-60': data.response.goals.for.minute['46-60'],
+        '61-75': data.response.goals.for.minute['61-75'],
+        '76-90': data.response.goals.for.minute['76-90'],
+        '91-105': data.response.goals.for.minute['91-105'],
+        '106-120': data.response.goals.for.minute['106-120'],
+      }
     }
 
     localStorage.setItem(`stat: ${team} ${season} ${league}`, JSON.stringify(stat))
