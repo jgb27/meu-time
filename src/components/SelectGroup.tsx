@@ -70,8 +70,7 @@ export const SelectGroup = ({ apiKey, setTeam, setStatistic, setPlayers }: Props
     GetCoutries(apiKey).then((data) => {
       setCoutries(data)
     })
-
-  }, [])
+  }, [apiKey])
 
   return (
     <HStack minW="80%">
@@ -111,12 +110,13 @@ export const SelectGroup = ({ apiKey, setTeam, setStatistic, setPlayers }: Props
         onChange={(e) => {
           setSeason(parseInt(e.target.value))
           GetTeams(apiKey, league.id, parseInt(e.target.value)).then((data) => {
-            data.map((team: any) => {
+            setTeams([])
+            data.map((team: Team) => {
               const t = {
-                id: team.team.id,
-                code: team.team.code,
-                name: team.team.name,
-                logo: team.team.logo
+                id: team.id,
+                code: team.code,
+                name: team.name,
+                logo: team.logo
               }
               setTeams((teams) => [...teams, t])
             })
@@ -147,11 +147,11 @@ export const SelectGroup = ({ apiKey, setTeam, setStatistic, setPlayers }: Props
           GetTeamPlayers(apiKey, team.team, team.season, team.league).then((data) => {
             setPlayers({ players: [] })
             let pl: Player[] = []
-            data.map((player: any) => {
+            data.map((player: Player) => {
               const p = {
-                name: player.player.name,
-                age: player.player.age,
-                nationality: player.player.nationality
+                name: player.name,
+                age: player.age,
+                nationality: player.nationality
               }
 
               pl = [...pl, p]

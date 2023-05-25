@@ -5,7 +5,22 @@ interface League {
   sessons?: number[]
 }
 
+interface Team {
+  id: number,
+  code: string,
+  name: string,
+  logo: string
+}
+
+interface Player {
+  name: string,
+  age: number,
+  nationality: string,
+}
+
 const leagues: League[] = []
+const teams: Team[] = []
+const players: Player[] = []
 
 export const GetCoutries = async (api: string) => {
   const data = localStorage.getItem('countries')
@@ -81,9 +96,18 @@ export const GetTeams = async (api: string, league: number, season: number) => {
 
     const data = await response.json()
 
-    localStorage.setItem(`teams: ${league} ${season}`, JSON.stringify(data.response))
+    teams.push(...data.response.map((team: any) => {
+      return {
+        id: team.team.id,
+        code: team.team.code,
+        name: team.team.name,
+        logo: team.team.logo
+      }
+    }))
 
-    return data.response
+    localStorage.setItem(`teams: ${league} ${season}`, JSON.stringify(teams))
+
+    return teams
   }
 }
 
@@ -122,7 +146,7 @@ export const GetTeamPlayers = async (api: string, team: number, season: number, 
   if (data) {
     console.log('Team players from cache')
     return JSON.parse(data)
-  }else{
+  } else {
     console.log('Team players from API')
     const response = await fetch(`https://v3.football.api-sports.io/players?season=${season}&team=${team}&league=${league}`, {
       "method": "GET",
@@ -134,8 +158,16 @@ export const GetTeamPlayers = async (api: string, team: number, season: number, 
 
     const data = await response.json()
 
-    localStorage.setItem(`players: ${team} ${season} ${league}`, JSON.stringify(data.response))
+    players.push(...data.response.map((player: any) => {
+      return {
+        name: player.player.name,
+        age: player.player.age,
+        nationality: player.player.nationality
+      }
+    }))
 
-    return data.response
+    localStorage.setItem(`players: ${team} ${season} ${league}`, JSON.stringify(players))
+
+    return players
   }
 }
