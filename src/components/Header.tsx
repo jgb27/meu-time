@@ -11,6 +11,13 @@ export const Header = (props: HeaderProps) => {
   const navigate = useNavigate();
 
   const align = !props.btn ? "flex-start" : "center";
+
+
+  const Exit = async () => {
+    localStorage.clear()
+    navigate("/", { state: { apiKey: "", name: "", plan: "" } })
+  }
+
   return (
     <Stack
       paddingStart="53px"
@@ -45,7 +52,11 @@ export const Header = (props: HeaderProps) => {
       </VStack>
       {
         props.btn ? (
-          <Button size="lg" variant="outline" colorScheme="red" onClick={() => navigate("/", { state: { apiKey: "", name: "", plan: "" } })}>
+          <Button
+            size="lg"
+            variant="outline"
+            colorScheme="red"
+            onClick={() => Exit()}>
             <Text fontFamily="'Inter Variable', sans-serif" fontSize="14px">Exit</Text>
           </Button>
         ) : (<></>)

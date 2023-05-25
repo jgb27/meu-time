@@ -10,7 +10,10 @@ import { IPlayer } from "../Interfaces/InterfaceResponseApi";
 
 function Dashboard() {
   const { state } = useLocation();
-  const { name, plan, apiKey } = state
+  const user = localStorage.getItem("user")
+  const userJson = user ? JSON.parse(user) : null
+
+  const { name, plan, apiKey } = state ? state : userJson
 
   interface IPlayers {
     players: IPlayer[]

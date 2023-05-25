@@ -15,7 +15,6 @@ export const LoginApiInput = () => {
     if (user && JSON.parse(user).apiKey == apiKey) {
       console.log("user already logged")
       const userJson = JSON.parse(user)
-      localStorage.setItem("user", JSON.stringify(userJson))
       navigate("/dashboard", { state: { apiKey: userJson.apiKey, name: userJson.name, plan: userJson.plan } })
 
     } else {

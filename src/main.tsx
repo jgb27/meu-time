@@ -16,13 +16,17 @@ import Error404 from './pages/ErrorPage';
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import App from './App';
 
+// user localStorage
+const user = localStorage.getItem("user")
+const userJson = user ? JSON.parse(user) : null
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     errorElement: <Error404 />,
     children: [
-      { path: "/", element: <Login /> },
+      { path: "/", element: userJson ? <Dashboard /> : <Login /> },
       { path: "/dashboard", element: <Dashboard /> },
     ]
   }
