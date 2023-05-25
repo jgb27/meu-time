@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface League {
   id: number,
   name: string,
@@ -69,7 +70,7 @@ export const GetLeague = async (api: string, country: string) => {
         id: league.league.id,
         name: league.league.name,
         logo: league.league.logo,
-        sessons: league.seasons.map((season: any) => season.year)
+        sessons: league.map((season: any) => season.year)
       })
     })
 
