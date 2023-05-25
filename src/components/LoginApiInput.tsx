@@ -41,6 +41,7 @@ export const LoginApiInput = () => {
       }
 
       localStorage.setItem("user", JSON.stringify(user))
+      navigate("/dashboard", { state: { apiKey: apiKey, name: name, plan: plan } })
     }
 
   }

@@ -26,7 +26,7 @@ const players: Player[] = []
 export const GetCoutries = async (api: string) => {
   const data = localStorage.getItem('countries')
 
-  if (data) {
+  if (data && JSON.parse(data).length > 0) {
     console.log('Coutries from cache')
     return JSON.parse(data)
   } else {
@@ -103,7 +103,6 @@ export const GetTeams = async (api: string, league: number, season: number) => {
         code: team.team.code,
         name: team.team.name,
         logo: team.team.logo
-
       }
     }))
 

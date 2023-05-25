@@ -9,6 +9,7 @@ import {
   VStack,
   Text,
 } from '@chakra-ui/react'
+import Graphics from './Graphics';
 
 interface IPlayer {
   name: string,
@@ -104,28 +105,36 @@ export const TableTeamStatistic = (props: IStatistic) => (
     height="600px"
     alignItems="center"
   >
-    <Text fontSize="2xl" fontFamily="'Inter Variable', sans-serif" fontWeight="medium">
-      Team statistic
-    </Text>
-    <TableContainer width="full" >
-      <Table variant='simple'>
-        <Thead>
-          <Tr>
-            <Th>Games</Th>
-            <Th>Win</Th>
-            <Th>Drawns</Th>
-            <Th>Loses</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          <Tr>
-            <Td>{props.games}</Td>
-            <Td>{props.wins}</Td>
-            <Td>{props.draws}</Td>
-            <Td>{props.loses}</Td>
-          </Tr>
-        </Tbody>
-      </Table>
-    </TableContainer>
+    <VStack width="80%" height="100%">
+      <Text fontSize="2xl" fontFamily="'Inter Variable', sans-serif" fontWeight="medium">
+        Team statistic
+      </Text>
+      <TableContainer width="full" >
+        <Table variant='simple'>
+          <Thead>
+            <Tr>
+              <Th>Games</Th>
+              <Th>Win</Th>
+              <Th>Drawns</Th>
+              <Th>Loses</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Td>{props.games}</Td>
+              <Td>{props.wins}</Td>
+              <Td>{props.draws}</Td>
+              <Td>{props.loses}</Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </VStack>
+    <VStack spacing={2}>
+      <Text fontSize="2xl" fontFamily="'Inter Variable', sans-serif" fontWeight="medium">
+        Goals for minute
+      </Text>
+      <Graphics {...props.goals} />
+    </VStack>
   </VStack>
 )
