@@ -1,9 +1,13 @@
 import { HStack, Select } from "@chakra-ui/react"
-import { GetCoutries, GetLeague, GetTeamPlayers, GetTeamStatistic, GetTeams } from "../Controllers/Api";
 import { useEffect, useState } from "react";
 import { Coutry, ILeague, IPlayer, ITeam } from "../Interfaces/InterfaceResponseApi";
 import { IStatistic } from "../Interfaces/IntefaceStatistic";
 import { TeamNumber } from "../Interfaces/InterfaceTeam";
+import { GetCoutries } from "../Controllers/GetCoutries";
+import { GetLeague } from "../Controllers/GetLeague";
+import { GetTeams } from "../Controllers/GetTeams";
+import { GetTeamStatistic } from "../Controllers/GetTeamStatistic";
+import { GetTeamPlayers } from "../Controllers/GetTeamPlayers";
 
 interface Players {
   players: IPlayer[]

@@ -3,7 +3,6 @@ import { Header } from "../components/Header"
 import { LoginApiInput } from "../components/LoginApiInput"
 
 function Login() {
-
   return (
     <VStack spacing="15%">
       <Header />
