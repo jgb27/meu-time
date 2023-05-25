@@ -1,7 +1,7 @@
 import { Header } from "../components/Header"
 import { useLocation } from "react-router-dom";
 import { SelectGroup } from "../components/SelectGroup";
-import { HStack, Text, Center, VStack } from "@chakra-ui/react";
+import { HStack, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { TablePlayer, TableTeamStatistic } from "../components/TableInfo";
 
@@ -13,6 +13,7 @@ function Dashboard() {
     team: number,
     season: number,
     league: number
+    name: string
   }
 
   interface IPlayer {
@@ -33,7 +34,7 @@ function Dashboard() {
     lineups: string,
   }
 
-  const [team, setTeam] = useState<TeamNumber>({ team: 0, season: 0, league: 0 })
+  const [team, setTeam] = useState<TeamNumber>({ team: 0, season: 0, league: 0, name: "" })
   const [statistic, setStatistic] = useState<IStatistic>({ games: "", wins: "", draws: "", loses: "", lineups: "" })
 
   const [players, setPlayers] = useState<IPlayers>({ players: [] })
@@ -58,9 +59,8 @@ function Dashboard() {
         height="600px"
         width="80%"
         p={2}
-        spacing={4}
       >
-        <TablePlayer players={players.players} />
+        <TablePlayer players={players.players} nameTeam={team.name}/>
         <TableTeamStatistic
           games={statistic.games}
           wins={statistic.wins}

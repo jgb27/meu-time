@@ -25,7 +25,8 @@ interface Team {
 interface TeamNumber {
   team: number,
   season: number,
-  league: number
+  league: number,
+  name: string
 }
 
 interface Statistic {
@@ -135,7 +136,8 @@ export const SelectGroup = ({ apiKey, setTeam, setStatistic, setPlayers }: Props
           const team = {
             team: parseInt(e.target.value),
             season: season,
-            league: league.id
+            league: league.id,
+            name: teams.find((team) => team.id === parseInt(e.target.value))?.name || ""
           }
           setTeam(team)
           GetTeamStatistic(apiKey, team.team, team.season, team.league).then((data) => {

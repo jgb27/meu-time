@@ -17,7 +17,8 @@ interface IPlayer {
 }
 
 interface IPlayers {
-  players: IPlayer[]
+  players: IPlayer[],
+  nameTeam: string
 }
 
 interface IStatistic {
@@ -27,16 +28,16 @@ interface IStatistic {
   loses: string,
 }
 
-export const TablePlayer = ({ players }: IPlayers) => (
+export const TablePlayer = ({ players, nameTeam }: IPlayers) => (
   <VStack
     width="80%"
     height="600px"
     alignItems="center"
   >
     <Text fontSize="2xl" fontFamily="'Inter Variable', sans-serif" fontWeight="medium">
-      Players
+      Team players: <Text as="span" color="green.500">{nameTeam}</Text>
     </Text>
-    <TableContainer height="full" width="50%" overflowY="auto" overflowX="hidden">
+    <TableContainer height="full" width="full" overflowY="auto" overflowX="hidden">
       <Table variant='striped' colorScheme="blackAlpha">
         <Thead>
           <Tr>
@@ -68,9 +69,9 @@ export const TableTeamStatistic = (props: IStatistic) => (
     alignItems="center"
   >
     <Text fontSize="2xl" fontFamily="'Inter Variable', sans-serif" fontWeight="medium">
-      Statistic
+      Team statistic 
     </Text>
-    <TableContainer width="50%" >
+    <TableContainer width="full" >
       <Table variant='simple'>
         <Thead>
           <Tr>
