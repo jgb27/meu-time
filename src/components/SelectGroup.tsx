@@ -110,8 +110,7 @@ export const SelectGroup = ({ apiKey, setTeam, setStatistic, setPlayers }: Props
   }, [apiKey])
 
   return (
-    <HStack minW="80%">
-
+    <HStack minW="80%" alignItems="center">
       {/* Coutry */}
       <Select
         placeholder="Select a country"

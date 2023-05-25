@@ -130,7 +130,7 @@ export const TableTeamStatistic = (props: IStatistic) => (
         </Table>
       </TableContainer>
     </VStack>
-    <VStack spacing={2}>
+    <VStack spacing={2} width="100%">
       <Text fontSize="2xl" fontFamily="'Inter Variable', sans-serif" fontWeight="medium">
         Goals for minute
       </Text>

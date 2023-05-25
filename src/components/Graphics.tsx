@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import Chart from "react-apexcharts";
 
 interface GoalsForMinute {
@@ -69,13 +70,15 @@ const Graphics = (props: GoalsForMinute) => {
   ]
 
   return (
-    <Chart
-      options={options}
-      series={series}
-      type="bar"
-      width="800"
-      height="320"
-    />
+    <Box width="100%">
+      <Chart
+        options={options}
+        series={series}
+        type="bar"
+        width="100%"
+        height="320"
+      />
+    </Box>
   )
 }
 
