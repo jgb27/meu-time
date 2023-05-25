@@ -1,116 +1,130 @@
-import { HStack, Select, VStack } from "@chakra-ui/react"
 import { Header } from "../components/Header"
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { GetCoutries, GetLeague, GetTeams } from "../Controllers/Api";
+import { SelectGroup } from "../components/SelectGroup";
+import { HStack, VStack } from "@chakra-ui/react";
+import { useState } from "react";
 
-interface Coutry {
-  name: string,
-  code: string
-  flag: string
-}
-
-interface League {
-  id: number,
-  name: string,
-  logo: string,
-  sessons?: number[]
-}
-
-interface Team {
-  id: number,
-  code: string,
-  name: string,
-  logo: string
-}
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Text,
+  TableContainer,
+} from '@chakra-ui/react'
 
 function Dashboard() {
   const { state } = useLocation();
   const { name, plan, apiKey } = state
 
-  const [coutries, setCoutries] = useState<Coutry[]>([])
-  const [coutry, setCoutry] = useState<string>("")
+  interface TeamNumber {
+    team: number,
+    season: number,
+    league: number
+  }
 
-  const [leagues, setLeagues] = useState<League[]>([])
-  const [league, setLeague] = useState<League>({ id: 0, name: "", logo: "" })
+  interface Player {
+    name: string,
+    age: number,
+    nationality: string,
+  }
 
-  const [season, setSeason] = useState<number>(0)
+  interface Players {
+    players: Player[]
+  }
 
-  const [teams, setTeams] = useState<Team[]>([])
+  interface Statistic {
+    games: string,
+    wins: string,
+    draws: string,
+    loses: string,
+    lineups: string,
+  }
 
-  useEffect(() => {
-    GetCoutries(apiKey).then((data) => {
-      setCoutries(data)
-    })
-
-  }, [])
-
+  const [team, setTeam] = useState<TeamNumber>({ team: 0, season: 0, league: 0 })
+  const [statistic, setStatistic] = useState<Statistic>({ games: "", wins: "", draws: "", loses: "", lineups: "" })
+  
+  const [players, setPlayers] = useState<Players>({ players: [] })
 
   return (
     <VStack spacing="2%">
       <Header btn={true} name={name} plan={plan} />
-      <HStack minW="80%">
+      <SelectGroup
+        apiKey={apiKey}
+        setTeam={setTeam}
+        setStatistic={setStatistic}
+        setPlayers={setPlayers}
+      />
 
-        {/* Coutry */}
-        <Select
-          placeholder="Select a country"
-          onChange={(e) => {
-            setCoutry(e.target.value)
-            GetLeague(apiKey, e.target.value).then((data) => {
-              setLeagues(data)
-            })
-            return
-          }}
-        >
-          {coutries.map((coutry, index) => {
-            return <option key={index} value={coutry.code}>{coutry.name}</option>
-          })}
-        </Select>
-        {/* League */}
-        <Select
-          placeholder="Select a league"
-          disabled={coutry ? false : true}
-          onChange={(e) => {
-            setLeague(leagues[parseInt(e.target.value)])
-          }}
-        >
-          {leagues.map((league, index) => {
-            return <option key={index} value={index}>{league.name}</option>
-          })}
-        </Select>
+      <Text fontSize="2xl" fontFamily="'Inter Variable', sans-serif" fontWeight="medium">
+        Most used tactic: {statistic.lineups}
+      </Text>
 
-        {/* Season */}
-        <Select
-          placeholder="Select a season"
-          disabled={league && coutry ? false : true}
-          onChange={(e) => {
-            setSeason(parseInt(e.target.value))
-            GetTeams(apiKey, league.id, parseInt(e.target.value)).then((data) => {
-              data.map((team: any) => {
-                const t = {
-                  id: team.team.id,
-                  code: team.team.code,
-                  name: team.team.name,
-                  logo: team.team.logo
+      <HStack justifyContent="space-between" minW="70%" justifyItems="flex-start" alignItems="flex-start">
+        <VStack alignItems="flex-start">
+          <Text
+            fontSize="2xl"
+            fontFamily="'Inter Variable', sans-serif"
+            fontWeight="medium"
+          >
+            Player List
+          </Text>
+          <TableContainer maxH="2%" >
+            <Table variant='striped' colorScheme='dark'>
+              <Thead>
+                <Tr>
+                  <Th>Name</Th>
+                  <Th>Age</Th>
+                  <Th>Nationality</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {
+                  players.players.map((player, index) => (
+                    <Tr key={index}>
+                      <Td>{player.name}</Td>
+                      <Td>{player.age}</Td>
+                      <Td>{player.nationality}</Td>
+                    </Tr>
+                  ))
                 }
-                setTeams((teams) => [...teams, t])
-              })
-            })
-          }}
-        >
-          {league.sessons?.map((season, index) => {
-            return <option key={index} value={season}>{season}</option>
-          })}
-        </Select>
-
-        {/* Team */}
-        <Select placeholder="Select a team" disabled={season && league && coutry ? false : true}>
-          {teams.map((team, index) => {
-            return <option key={index} value={team.name}>{team.name}</option>
-          })}
-        </Select>
-
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </VStack>
+        <VStack alignItems="flex-start" >
+          <Text
+            fontSize="2xl"
+            fontFamily="'Inter Variable', sans-serif"
+            fontWeight="medium"
+          >
+            Team Statistic
+          </Text>
+          <TableContainer>
+            <Table variant='striped' colorScheme='dark'>
+              <Thead>
+                <Tr>
+                  <Th>Games</Th>
+                  <Th>Wins</Th>
+                  <Th>Draws</Th>
+                  <Th>Loses</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                <Tr>
+                  <Td>{statistic.games}</Td>
+                  <Td>{statistic.wins}</Td>
+                  <Td>{statistic.draws}</Td>
+                  <Td>{statistic.loses}</Td>
+                </Tr>
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </VStack>
       </HStack>
+
     </VStack>
   )
 }
