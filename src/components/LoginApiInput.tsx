@@ -10,21 +10,39 @@ export const LoginApiInput = () => {
   const [isIvalidApiKey, setIsIvalidApiKey] = useState<boolean>(false)
 
   const validateApiKey = async () => {
-    const response = await fetch("https://v3.football.api-sports.io/status", {
-      "method": "GET",
-      "headers": {
-        "x-rapidapi-host": "v3.football.api-sports.io",
-        "x-rapidapi-key": apiKey
-      }
-    })
-    const data = await response.json()
-    if (data.errors.token) {
-      return setIsIvalidApiKey(true)
-    }
-    const name = data.response.account.firstname
-    const plan = data.response.subscription.plan
+    const user = localStorage.getItem("user")
 
-    navigate("/dashboard", { state: { apiKey: apiKey, name: name, plan: plan } })
+    if (user && JSON.parse(user).apiKey == apiKey) {
+      console.log("user already logged")
+      const userJson = JSON.parse(user)
+      localStorage.setItem("user", JSON.stringify(userJson))
+      navigate("/dashboard", { state: { apiKey: userJson.apiKey, name: userJson.name, plan: userJson.plan } })
+
+    } else {
+      console.log("user not logged")
+      const response = await fetch("https://v3.football.api-sports.io/status", {
+        "method": "GET",
+        "headers": {
+          "x-rapidapi-host": "v3.football.api-sports.io",
+          "x-rapidapi-key": apiKey
+        }
+      })
+      const data = await response.json()
+      if (data.errors.token) {
+        return setIsIvalidApiKey(true)
+      }
+      const name = data.response.account.firstname
+      const plan = data.response.subscription.plan
+
+      const user = {
+        name: name,
+        plan: plan,
+        apiKey: apiKey
+      }
+
+      localStorage.setItem("user", JSON.stringify(user))
+    }
+
   }
 
   return (
